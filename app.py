@@ -10,7 +10,7 @@ app = FastAPI(title="Student Dropout Prediction")
 
 #Input design. Frontend sends only what it knows
 class StudentInput(BaseModel):
-    data: dict
+    data: dict[str,float]
 
 def prediction_label(pred):
     if pred==1:
@@ -26,6 +26,10 @@ def risk_label(proba):
     else:
         return "Low Risk"
     
+#Health Check
+@app.get("/")
+def health():
+    return {"status":"API is runnig"}
 #API enpoint
 @app.post("/predict")
 def predict_output(input: StudentInput):
